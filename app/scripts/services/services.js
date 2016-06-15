@@ -13,47 +13,81 @@ angular.module('invoiceApp')
 	.service('calendarService', function(selectMode, monthNames){
 		var self = this;
 	
-		this.currentDate = undefined;
+		var currentDate = undefined;
+	  var nextDate = undefined;
+		var mode = -1;
 		
+		function update(){
+			if( currentDate != undefined && mode != -1){
+				nextDate = createNewDate(mode);
+			}
+		}
+	
+		function createNewDate(mode){
+			return createNextDate(currentDate,mode);			
+		}
+		function createNextDate(date,mode){
+			var output = new Date(date.getTime());
+			output.setMonth( output.getMonth() + selectMode[mode].month );
+			output.setDate( output.getDate() + selectMode[mode].days );
+			output.setFullYear( output.getFullYear() + selectMode[mode].year );
+			return output;
+		}
+		
+		this.getDateList = function(length){
+			var out = undefined; 
+			if(length < 20 && mode != -1 && currentDate != undefined){
+				var index =0;
+				var tempDate = new Date(currentDate.getTime());
+				out = new Array();
+				var temp_date = currentDate;
+				while(index<length){
+					var temp_date = createNextDate(temp_date, mode);
+					(function(param){
+						out.push(param);
+					})(temp_date);
+					index++;
+				}
+			}
+			return out;
+		}
 	
 		this.setDate= function(date){
 			if(date !== null){
-				this.currentDate = new Date(date);
+				currentDate = new Date(date);
 			} else {
-				this.currentDate = undefined;
+				currentDate = undefined;
 			}
+			update();
+		}
+		this.setMode= function(param){
+			mode = param;
+			update();
+		}
+		this.getNextDate = function(){
+			return nextDate;
 		}
 		this.getCurrentDate = function(){
-			return this.currentDate;
+			return currentDate;
 		}
 		this.available= function(){
-			return this.currentDate !== undefined;
+			return currentDate !== undefined;
 		}
 		
-		this.nextVaildYear= function(mode){
+		this.getYear= function(mode){
 			if(mode != -1){
-				var temp_date = createNewDate(mode);
-				return temp_date.getFullYear();
+				return nextDate.getFullYear();
 			} else {
-				return this.currentDate.getFullYear();
+				return currentDate.getFullYear();
 			}
 		}
 	
-		this.nextVaildMonth= function(mode){
+		this.getMonth= function(mode){
 			if(mode != -1){
-				var temp_date = this.createNewDate(mode);
-				return monthNames[ temp_date.getMonth() ];
+				return monthNames[ nextDate.getMonth() ];
 			} else {
-				return monthNames[ this.currentDate.getMonth() ];
+				return monthNames[ currentDate.getMonth() ];
 			}
-		}
-		
-		this.createNewDate(mode){
-			var output = new Date(this.currentDate.getTime());
-			output.setMonth( output.getMonth() + selectMode[mode].month );
-			output.setDate( output.getDate() + selectMode[mode].days );
-			output.setFullYear( output.getFullYear + selectMode[mode].year );
-			return output;
 		}
 		
 	})

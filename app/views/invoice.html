@@ -19,7 +19,7 @@
 			 
 			 <div class="form-group">
 				 <label for="chosen_data_mode">Frequency:</label>
-				 <select id="chosen_data_mode" class="form-control" ng-options="item as item.name for item in selectMode" ng-model="chosen_data_mode"></select>
+				 <select id="chosen_data_mode" class="form-control" ng-options="item as item.name for item in selectMode" ng-model="frequency"  ng-change="updateFrequency()"></select>
 			 </div>
 			 
 			 <div class="form-group">
@@ -30,15 +30,21 @@
 		</div><!-- /.col-lg-6 -->
 		<div class="col-lg-6">
 			<div class="panel panel-default">
-				<div class="panel-heading">Description view</div>
+				<div class="panel-heading">Current invoice</div>
+				<div class="panel-body" ng-bind="current_description">
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">New invoice</div>
 				<div class="panel-body" ng-bind="new_description">
 				</div>
 			</div>
 			<div class="panel panel-default">
 				<div class="panel-heading">Data prediction:</div>
 				<div class="panel-body">
-				{{chosen_data_mode.name}}
-					
+					<ul>
+						<li ng-repeat="item in dates_list">{{::item| date: 'dd.MM.yy'}}</li>
+					</ul>
 				</div>
 			</div>
 			

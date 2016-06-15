@@ -13,44 +13,59 @@ angular.module('invoiceApp')
 		init();
 	
 		$scope.$watch('description', function(val) {
-				$scope.new_description = $filter('yearMonthReplace')(val,7);
-				$scope.description = $filter('yearMonthReplace')(val);
+				$scope.current_description = yearMonthReplace(val);
+				if($scope.frequency)
+					$scope.new_description = yearMonthReplace(val, $scope.frequency.id);
+				else
+					$scope.new_description = $scope.description;
 			}, true);
-		
 		
 		$scope.updateDate = function(){
 			calendarService.setDate($scope.start_data);
-			$scope.description = $filter('yearMonthReplace')($scope.description);
-			$scope.new_description = $filter('yearMonthReplace')($scope.description,7);	
+			updateNextDate();
+			
+			$scope.current_description = yearMonthReplace($scope.description);
+			if($scope.frequency)
+				$scope.new_description = yearMonthReplace($scope.description,$scope.frequency.id);
+			else
+				$scope.new_description = $scope.description;
 		}
 		
-		$scope.modeUp= function(){
-			//todo
-			$scope.next_date = calendarService.createNewDate(7);
+		$scope.updateFrequency = function(){
+			calendarService.setMode($scope.frequency.id);
+			updateNextDate();
+			if($scope.frequency)
+					$scope.new_description = yearMonthReplace($scope.description, $scope.frequency.id);
+			else
+				$scope.new_description = $scope.description;
+		}
+		
+		function updateNextDate(){
+			var temp_date = calendarService.getNextDate()
+			if(temp_date !== undefined){
+				$scope.next_date = $filter('date')(temp_date,'dd.MM.yy');
+				$scope.dates_list = calendarService.getDateList(10);
+			}
 		}
 		
 		function init(){
 			$scope.selectMode = selectMode;
 		}
-})
 	
-	
-.filter('yearMonthReplace', function(calendarService) {
-  return function(input, mode) {
-		
-		if(mode === undefined)
-			mode = -1;
-		
-		var out = "";
+	 function yearMonthReplace(input, mode) {
+  		if(mode === undefined)
+				mode = -1;
+		 
 			if(input != undefined){
-				out = input;
 				if(input.indexOf('[year]') != -1 && calendarService.available()){
-					out = input.replace('[year]',calendarService.nextVaildYear( mode ));
+					input = input.split('[year]').join(calendarService.getYear( mode ));
 				}
 				if(input.indexOf('[month]') != -1 && calendarService.available()){
-					out = input.replace('[month]',calendarService.nextVaildMonth( mode ));
+						input = input.split('[month]').join(calendarService.getMonth( mode ));
 				}
-		}
-  return out;
-  };
-})
+			}
+		return input;
+		};
+	
+		
+});
