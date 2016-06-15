@@ -50,6 +50,7 @@ angular.module('invoiceApp')
 		
 		function init(){
 			$scope.selectMode = selectMode;
+			$scope.start_data = new Date();
 		}
 	
 	 function yearMonthReplace(input, mode) {
@@ -65,7 +66,25 @@ angular.module('invoiceApp')
 				}
 			}
 		return input;
-		};
+		}		
 	
-		
+	// datepicker configuration
+
+  $scope.dateOptions = {
+    //dateDisabled: disabled,
+    formatYear: 'yy',
+    maxDate: new Date(2020, 1, 10),
+    minDate: new Date(2016, 1, 10),
+    startingDay: 1
+  };
+
+  $scope.open1 = function() {
+    $scope.popup1.opened = true;
+  };
+
+  $scope.format = 'dd.MM.yy';
+  
+  $scope.popup1 = {
+    opened: false
+  };
 });

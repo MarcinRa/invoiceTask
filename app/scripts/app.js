@@ -10,7 +10,9 @@
  */
 angular
   .module('invoiceApp', [
-    'ngRoute'
+    'ngRoute',
+		'ngAnimate',
+		'ui.bootstrap'
   ])
   .config(function ($routeProvider) {
     $routeProvider
