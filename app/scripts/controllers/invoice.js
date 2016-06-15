@@ -21,14 +21,21 @@ angular.module('invoiceApp')
 			}, true);
 		
 		$scope.updateDate = function(){
-			calendarService.setDate($scope.start_data);
-			updateNextDate();
 			
-			$scope.current_description = yearMonthReplace($scope.description);
-			if($scope.frequency)
-				$scope.new_description = yearMonthReplace($scope.description,$scope.frequency.id);
-			else
-				$scope.new_description = $scope.description;
+			if($filter('date')($scope.start_date,'dd.MM.yy') === undefined){
+				$scope.formatError = true;	
+			} else {
+				$scope.formatError = false;
+				
+				calendarService.setDate($scope.start_date);
+				updateNextDate();
+			
+				$scope.current_description = yearMonthReplace($scope.description);
+				if($scope.frequency)
+					$scope.new_description = yearMonthReplace($scope.description,$scope.frequency.id);
+				else
+					$scope.new_description = $scope.description;
+				}
 		}
 		
 		$scope.updateFrequency = function(){
@@ -50,7 +57,10 @@ angular.module('invoiceApp')
 		
 		function init(){
 			$scope.selectMode = selectMode;
-			$scope.start_data = new Date();
+			$scope.start_date = new Date();
+			calendarService.setDate($scope.start_date);
+			$scope.altInputFormats = ['M!/d!/yyyy'];
+			$scope.formatError = false;
 		}
 	
 	 function yearMonthReplace(input, mode) {
@@ -71,20 +81,24 @@ angular.module('invoiceApp')
 	// datepicker configuration
 
   $scope.dateOptions = {
-    //dateDisabled: disabled,
     formatYear: 'yy',
     maxDate: new Date(2020, 1, 10),
     minDate: new Date(2016, 1, 10),
     startingDay: 1
   };
 
-  $scope.open1 = function() {
-    $scope.popup1.opened = true;
+	$scope.today = function() {
+    $scope.start_date = new Date();
+  };
+  
+	
+  $scope.open = function() {
+    $scope.popup.opened = true;
   };
 
   $scope.format = 'dd.MM.yy';
   
-  $scope.popup1 = {
+  $scope.popup = {
     opened: false
   };
 });

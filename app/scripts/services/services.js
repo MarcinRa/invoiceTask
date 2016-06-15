@@ -26,6 +26,7 @@ angular.module('invoiceApp')
 		function createNewDate(mode){
 			return createNextDate(currentDate,mode);			
 		}
+	
 		function createNextDate(date,mode){
 			var output = new Date(date.getTime());
 			output.setMonth( output.getMonth() + selectMode[mode].month );
@@ -43,9 +44,7 @@ angular.module('invoiceApp')
 				var temp_date = currentDate;
 				while(index<length){
 					var temp_date = createNextDate(temp_date, mode);
-					(function(param){
-						out.push(param);
-					})(temp_date);
+					out.push(temp_date);
 					index++;
 				}
 			}

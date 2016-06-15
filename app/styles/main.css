@@ -81,3 +81,10 @@ body {
     border-bottom: 0;
   }
 }
+
+/*border color change when format error appeard*/
+
+.format-error {
+	background-color: red;
+	color: white;
+}
