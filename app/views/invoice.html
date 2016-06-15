@@ -1,0 +1,48 @@
+<div class="jumbotron">
+  <h1>Invoice!</h1>
+  
+</div>
+
+<div class="row marketing">
+  <div class="row">
+		<div class="col-lg-6">
+		 	 
+		 	 <div class="form-group">
+			 	 <label for="start_data">Start date:</label>
+				 <input id="start_data" type="date" class="form-control" ng-model="start_data" ng-change="updateDate()">
+			 </div>
+			 
+			 <div class="form-group">
+				 <label for="description">Description:</label>
+				 <input type="text" class="form-control" id="description" placeholder="Description" ng-model="description">
+			 </div>
+			 
+			 <div class="form-group">
+				 <label for="chosen_data_mode">Frequency:</label>
+				 <select id="chosen_data_mode" class="form-control" ng-options="item as item.name for item in selectMode" ng-model="chosen_data_mode"></select>
+			 </div>
+			 
+			 <div class="form-group">
+				 <label for="next_date">Next date:</label>
+				 <input type="text" class="form-control" id="next_date" placeholder="next date" ng-model="next_date" disabled>
+			 </div>
+			 
+		</div><!-- /.col-lg-6 -->
+		<div class="col-lg-6">
+			<div class="panel panel-default">
+				<div class="panel-heading">Description view</div>
+				<div class="panel-body" ng-bind="new_description">
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">Data prediction:</div>
+				<div class="panel-body">
+				{{chosen_data_mode.name}}
+					
+				</div>
+			</div>
+			
+		</div><!-- /input-group -->
+	</div><!-- /.col-lg-6 -->
+</div><!-- /.row -->
+
