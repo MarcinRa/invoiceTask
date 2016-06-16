@@ -10,13 +10,13 @@ Run `grunt` for building and `grunt serve` for preview.
 
 ## Starting guide
 
-'''
+```
 git clone https://github.com/MarcinRa/invoiceTask.git
 cd invoiceTask
 npm install
 bower install
 grunt server 
-'''
+```
 
 On main page you will find "invoice" in navigation section, solution to invoice task is presented there.
 
