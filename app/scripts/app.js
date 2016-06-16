@@ -2,9 +2,9 @@
 
 /**
  * @ngdoc overview
- * @name dynpApp
+ * @name invoiceApp
  * @description
- * # dynpApp
+ * # invoiceApp
  *
  * Main module of the application.
  */
