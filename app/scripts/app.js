@@ -23,7 +23,12 @@ angular
 			.when('/invoice/', {
         templateUrl: 'views/invoice.html',
         controller: 'InvoiceCtrl'
-      })
+			})
+			.when('/invoice-second-approach/', {
+				templateUrl: 'views/secondapproach.html',
+        controller: 'InvoiceSecondCtrl'
+			})
+						
       .otherwise({
         redirectTo: '/'
       });

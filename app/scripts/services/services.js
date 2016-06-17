@@ -89,6 +89,19 @@ angular.module('invoiceApp')
 			}
 		}
 		
+		this.getCurrentYear= function(){
+			return currentDate !== undefined ? currentDate.getFullYear(): "";
+		}		
+		this.getCurrentMonth= function(){
+			return currentDate !== undefined ? monthNames[ currentDate.getMonth() ]: "";
+		}
+		this.getNewYear= function(){
+			return currentDate !== undefined ? nextDate.getFullYear(): "";
+		}
+		this.getNewMonth= function(){
+			return currentDate !== undefined ? monthNames[ nextDate.getMonth() ]: "";
+		}
+		
 	})
 	
 	.value('selectMode',
@@ -105,4 +118,16 @@ angular.module('invoiceApp')
 
 	.value('monthNames', ["January", "February", "March", "April", "May", "June",
 			"July", "August", "September", "October", "November", "December"]
-				);
+		)
+	.filter('replaceFilter', function() {
+		return function(input, selector, replacement ) {
+			var out = input;
+
+			if(input !== undefined && selector !== undefined && replacement !== undefined && replacement != ""){
+				if(input.indexOf(selector) != -1){
+					out = input.split(selector).join(replacement);
+				}
+			}
+		return out;
+		};
+	});

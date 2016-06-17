@@ -1,5 +1,5 @@
 <div class="jumbotron">
-  <h1>Invoice I!</h1>
+  <h1>Invoice II!</h1>
   
 </div>
 
@@ -45,13 +45,15 @@
 		<div class="col-lg-6">
 			<div class="panel panel-default">
 				<div class="panel-heading">Current invoice</div>
-				<div class="panel-body" ng-bind="current_description">
+				<div class="panel-body">
+					{{ description | replaceFilter: '[year]': curr_year | replaceFilter: '[month]': curr_month }}
 				</div>
 			</div>
 			<div class="panel panel-default">
 				<div class="panel-heading">New invoice</div>
-				<div class="panel-body" ng-bind="new_description">
-				</div>				
+				<div class="panel-body">
+					{{ description | replaceFilter: '[year]': new_year | replaceFilter: '[month]': new_month }}
+				</div>
 				
 			</div>
 			<div class="panel panel-default">
